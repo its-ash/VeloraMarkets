@@ -6,7 +6,7 @@ Marketing site for Velora Markets, a forex broker that offers only the nTrader p
 - Nuxt 4 (`app/` directory), Vue 3, TypeScript.
 - Three.js for the home hero background (`app/components/HeroScene.vue`).
 - Plain CSS with design tokens in `app/assets/css/main.css`. No CSS framework.
-- Icons: `@phosphor-icons/vue` only. Fonts: Space Grotesk (site, `--font`) and Geist Mono (`--mono`) from `@fontsource-variable`; Unbounded (`--display`, hero headline only) from Google Fonts, subset to the headline text in `nuxt.config.ts`.
+- Icons: `@phosphor-icons/vue` only. Fonts: Space Grotesk (site, `--font`) and Geist Mono (`--mono`) from `@fontsource-variable`; Bricolage Grotesque (`--display`, hero headline only) from Google Fonts, subset to the headline text in `nuxt.config.ts`.
 
 ## Structure
 - `app/data/site.ts`: all business content (URLs, accounts, pairs, FAQ, risk warning). Edit content here first.

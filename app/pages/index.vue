@@ -203,7 +203,7 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
 .hero-in { position: relative; display: grid; justify-items: center; text-align: center; gap: 1.5rem; max-inline-size: var(--wrap); margin-inline: auto; }
 .hero-in > * { max-inline-size: 44rem; }
 .hero-in > .lede { margin-inline: auto; }
-.hero-in > .ht { max-inline-size: 52rem; }
+.hero-in > .ht-wrap { max-inline-size: 100%; }
 .hero-in .ctas { justify-content: center; }
 .ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block-start: 0.5rem; }
 
