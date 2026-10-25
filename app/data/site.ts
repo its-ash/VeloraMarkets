@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://veloramarkets.io'
+export const SITE_URL = 'https://valoramarkets.io'
 export const PORTAL_URL = 'https://portal.veloramarkets.com'
 export const SIGNUP_URL = `${PORTAL_URL}/register`
 export const DEMO_URL = `${PORTAL_URL}/register?type=demo`
