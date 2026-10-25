@@ -1,0 +1,1 @@
+import{C as e}from"./CIZ9tWd5.js";var t=t=>`${e().app.baseURL.replace(/\/$/,``)}/${t.replace(/^\//,``)}`;export{t};
