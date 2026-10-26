@@ -4,7 +4,7 @@ import { CONTACT_EMAIL } from '~/data/site'
 
 usePageSeo({
   title: 'Contact Our Forex Support Team',
-  description: 'Contact Velora Markets support about accounts, nTrader or deposits. Live chat, email and phone 24 hours a day, Monday to Friday. Reply within one business day.',
+  description: 'Contact Valora Markets support about accounts, nTrader or deposits. Live chat, email and phone 24 hours a day, Monday to Friday. Reply within one business day.',
   path: '/contact',
   crumb: 'Contact',
 })

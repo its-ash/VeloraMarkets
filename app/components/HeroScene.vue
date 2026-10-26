@@ -16,6 +16,7 @@ const terrainVert = /* glsl */ `
   uniform vec2 uPointer;
   varying float vH;
   varying float vZ;
+  varying float vD;
   varying float vFade;
   void main() {
     vec3 p = position;
@@ -27,6 +28,7 @@ const terrainVert = /* glsl */ `
     p.y += h;
     vH = h;
     vZ = p.z;
+    vD = d;
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     vFade = smoothstep(80.0, 12.0, -mv.z) * smoothstep(50.0, 28.0, abs(p.x));
     gl_Position = projectionMatrix * mv;
@@ -40,14 +42,19 @@ const terrainFrag = /* glsl */ `
   uniform vec3 uScan;
   varying float vH;
   varying float vZ;
+  varying float vD;
   varying float vFade;
   void main() {
     float k = smoothstep(-1.8, 2.2, vH);
     vec3 col = mix(uLow, uHigh, k);
     float scanZ = mod(uTime * 8.0, 70.0) - 58.0;
     float scan = exp(-pow((vZ - scanZ) / 1.4, 2.0));
-    col += uScan * scan * 1.3;
-    gl_FragColor = vec4(col, (0.2 + k * 0.6 + scan * 0.9) * vFade);
+    // sonar rings travelling out from the globe, plus a still glow beneath it
+    float ring = smoothstep(0.9, 1.0, fract(vD * 0.055 - uTime * 0.22));
+    float pulse = ring * smoothstep(2.0, 9.0, vD);
+    float hub = exp(-vD * vD / 90.0);
+    col += uScan * (scan * 1.3 + pulse * 0.8) + uHigh * hub * 0.35;
+    gl_FragColor = vec4(col, (0.2 + k * 0.6 + scan * 0.9 + pulse * 0.55 + hub * 0.25) * vFade);
   }
 `
 
@@ -78,6 +85,36 @@ const globeFrag = /* glsl */ `
     if (d > 1.0) discard;
     vec3 col = vSeed > 0.9 ? uHot : uBase;
     gl_FragColor = vec4(col, smoothstep(1.0, 0.15, d) * mix(0.1, 0.9, vFace));
+  }
+`
+
+const shellVert = /* glsl */ `
+  varying vec3 vN;
+  varying vec3 vV;
+  varying vec3 vP;
+  void main() {
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vN = normalize(normalMatrix * normal);
+    vV = normalize(-mv.xyz);
+    vP = position;
+    gl_Position = projectionMatrix * mv;
+  }
+`
+
+const shellFrag = /* glsl */ `
+  uniform float uTime;
+  uniform vec3 uRim;
+  uniform vec3 uHot;
+  varying vec3 vN;
+  varying vec3 vV;
+  varying vec3 vP;
+  void main() {
+    // abs() because the back faces are rendered: their normals point away from the camera
+    float f = 1.0 - abs(dot(normalize(vN), normalize(vV)));
+    float rim = pow(f, 3.5);
+    float band = smoothstep(0.9, 1.0, sin(vP.y * 1.1 - uTime * 0.8) * 0.5 + 0.5);
+    vec3 col = mix(uRim, uHot, band * 0.6);
+    gl_FragColor = vec4(col, rim * 0.42 + band * 0.05);
   }
 `
 
@@ -183,12 +220,11 @@ onMounted(() => {
 
   let renderer: THREE.WebGLRenderer
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
+    renderer = new THREE.WebGLRenderer({ antialias: !small, alpha: true, powerPreference: small ? 'default' : 'high-performance' })
   }
   catch {
     return
   }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.5 : 1.75))
   renderer.setClearColor(0x000000, 0)
   el.appendChild(renderer.domElement)
 
@@ -204,9 +240,9 @@ onMounted(() => {
   const flat = (c: THREE.Color, a: number) => track(new THREE.ShaderMaterial({ vertexShader: flatVert, fragmentShader: flatFrag, uniforms: { uColor: { value: c }, uAlpha: { value: a } }, ...add }))
 
   // Neon wireframe floor with a scanning beam and a ripple under the globe
-  const cols = small ? 70 : 110
-  const rows = small ? 50 : 80
-  const gap = 0.85
+  const cols = small ? 46 : 110
+  const rows = small ? 32 : 80
+  const gap = small ? 1.3 : 0.85
   const tPos = new Float32Array(cols * rows * 3)
   for (let j = 0; j < rows; j++)
     for (let i = 0; i < cols; i++) {
@@ -243,7 +279,7 @@ onMounted(() => {
   globe.rotation.z = 0.3
   core.add(globe)
   const R = small ? 4.4 : 5.2
-  const gCount = small ? 1100 : 2000
+  const gCount = small ? 700 : 2000
   const gPos = new Float32Array(gCount * 3)
   const gSeed = new Float32Array(gCount)
   for (let i = 0; i < gCount; i++) {
@@ -263,6 +299,19 @@ onMounted(() => {
     ...add,
   }))
   globe.add(new THREE.Points(gGeo, gMat))
+
+  // Fresnel shell: gives the point cloud a rim so it reads as a sphere, not confetti
+  const shell = new THREE.Mesh(
+    track(new THREE.SphereGeometry(R * 1.004, 48, 32)),
+    track(new THREE.ShaderMaterial({
+      vertexShader: shellVert,
+      fragmentShader: shellFrag,
+      uniforms: { uTime: time, uRim: { value: GOLD }, uHot: { value: HOT } },
+      side: THREE.BackSide,
+      ...add,
+    })),
+  )
+  globe.add(shell)
   ;[0, Math.PI / 3, -Math.PI / 3].forEach((rx, i) => {
     const l = new THREE.LineLoop(track(circle(R * 1.003)), flat(i ? AMBER : GOLD, i ? 0.14 : 0.35))
     l.rotation.set(rx, i * 0.6, 0)
@@ -270,8 +319,8 @@ onMounted(() => {
   })
 
   // Data arcs between financial centres
-  const arcs = small ? 9 : 16
-  const segs = 50
+  const arcs = small ? 6 : 16
+  const segs = small ? 32 : 50
   const aPos: number[] = []
   const aT: number[] = []
   const aS: number[] = []
@@ -317,7 +366,7 @@ onMounted(() => {
   })
 
   // Scrolling price lines across the horizon
-  const seg = small ? 260 : 460
+  const seg = small ? 160 : 460
   const xs = new Float32Array(seg)
   for (let i = 0; i < seg; i++) xs[i] = (i / (seg - 1) - 0.5) * 92
   const pGeo = track(new THREE.BufferGeometry())
@@ -336,7 +385,7 @@ onMounted(() => {
   })
 
   // Rising data streams
-  const streams = small ? 40 : 90
+  const streams = small ? 24 : 90
   const sPos: number[] = []
   const sT: number[] = []
   const sS: number[] = []
@@ -365,7 +414,7 @@ onMounted(() => {
 
   // Floating currency symbols
   const textures = GLYPHS.map(g => track(glyphTexture(g)))
-  const sprites = Array.from({ length: small ? 12 : 22 }, (_, i) => {
+  const sprites = Array.from({ length: small ? 8 : 22 }, (_, i) => {
     const mat = track(new THREE.SpriteMaterial({ map: textures[i % textures.length], color: 0xffffff, ...add, opacity: 0 }))
     const sp = new THREE.Sprite(mat)
     const side = i % 2 ? 1 : -1
@@ -394,17 +443,33 @@ onMounted(() => {
   let visible = true
   let last = performance.now()
   let t = 6
+  let born = 0
+  // Cached once per layout instead of reading the DOM every frame, which forced a
+  // synchronous reflow at 60fps on a full-screen element.
+  let heroTop = 0
+  let heroH = 1
+  const measure = () => {
+    heroTop = el.getBoundingClientRect().top + window.scrollY
+    heroH = Math.max(el.clientHeight, 1)
+  }
 
   const frame = (now: number) => {
     const dt = Math.min((now - last) / 1000, 0.05)
     last = now
+    if (!born) born = now
     if (!calm) t += dt
     time.value = t
     const ease = 1 - Math.exp(-dt * 2.5)
     ptr.lerp(target, ease)
-    const scroll = Math.min(Math.max(-el.getBoundingClientRect().top / Math.max(el.clientHeight, 1), 0), 1)
+
+    // Push-in on first paint, so the scene arrives with the headline instead of popping
+    const enter = calm ? 1 : 1 - (1 - Math.min((now - born) / 1900, 1)) ** 3
+    core.scale.setScalar(0.88 + 0.12 * enter)
+
+    const scroll = Math.min(Math.max((window.scrollY - heroTop) / heroH, 0), 1)
     camera.position.x += (target.x * 2 - camera.position.x) * ease
     camera.position.y += (5 + target.y * 1 - scroll * 3 - camera.position.y) * ease
+    camera.position.z = 22 + 9 * (1 - enter)
     camera.lookAt(look)
     globe.rotation.y = t * 0.09
     core.rotation.y = target.x * 0.12
@@ -417,17 +482,26 @@ onMounted(() => {
   const resize = () => {
     const w = el.clientWidth
     const h = el.clientHeight
+    // Cap total pixels: a 1.75x buffer on a 4K screen is millions of wasted fragments
+    const budget = small ? 1.4e6 : 3.4e6
+    const ratio = Math.min(devicePixelRatio, small ? 1 : 1.75, Math.sqrt(budget / Math.max(w * h, 1)))
+    renderer.setPixelRatio(Math.max(0.75, ratio))
     renderer.setSize(w, h, false)
     camera.aspect = w / Math.max(h, 1)
     camera.fov = camera.aspect < 0.8 ? 72 : 52
     camera.updateProjectionMatrix()
+    measure()
     if (calm) frame(performance.now())
   }
   const ro = new ResizeObserver(resize)
   ro.observe(el)
 
+  let drawn = 0
   const loop = (now: number) => {
-    frame(now)
+    if (!small || now - drawn >= 30) {
+      drawn = now
+      frame(now)
+    }
     raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0
   }
   const start = () => {

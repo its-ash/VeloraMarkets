@@ -1,6 +1,6 @@
-# Velora Markets website
+# Valora Markets website
 
-Marketing site for Velora Markets, a forex broker that offers only the nTrader platform.
+Marketing site for Valora Markets, a forex broker that offers only the nTrader platform.
 
 ## Stack
 - Nuxt 4 (`app/` directory), Vue 3, TypeScript.

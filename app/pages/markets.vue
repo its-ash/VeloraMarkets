@@ -50,7 +50,7 @@ onMounted(place)
 
 <template>
   <div>
-    <PageHero :title="`${pairs.length} currency pairs, one platform`" :accent="['one', 'platform']" lede="Velora Markets is a forex-only broker. Trade majors, minors and exotics on nTrader with raw pricing from tier-one banks." />
+    <PageHero :title="`${pairs.length} currency pairs, one platform`" :accent="['one', 'platform']" lede="Valora Markets is a forex-only broker. Trade majors, minors and exotics on nTrader with raw pricing from tier-one banks." />
 
     <section class="section top0">
       <div class="wrap">

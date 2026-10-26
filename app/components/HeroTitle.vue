@@ -28,12 +28,6 @@ const lines = computed(() => {
         </template>
       </span>
     </h1>
-
-    <div class="tape" aria-hidden="true">
-      <span class="rule" />
-      <span v-for="(h, i) in BARS" :key="i" class="bar" :style="{ '--h': `${h}%`, '--i': i }" />
-      <span class="scan" />
-    </div>
   </div>
 </template>
 

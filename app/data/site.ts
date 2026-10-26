@@ -5,7 +5,7 @@ export const DEMO_URL = `${PORTAL_URL}/register?type=demo`
 export const LOGIN_URL = `${PORTAL_URL}/login`
 export const WEB_TRADER_URL = 'https://ntrader.veloramarkets.com'
 export const CONTACT_EMAIL = 'support@veloramarkets.com'
-export const COMPANY = 'Velora Markets'
+export const COMPANY = 'Valora Markets'
 
 export const ROUTES = [
   { path: '/', name: 'Home', priority: 1.0, freq: 'weekly' },
@@ -113,7 +113,7 @@ export const faqs = [
   },
   {
     q: 'What are the withdrawal fees?',
-    a: 'Velora Markets does not charge withdrawal fees. Your bank or payment provider may apply its own charges.',
+    a: 'Valora Markets does not charge withdrawal fees. Your bank or payment provider may apply its own charges.',
   },
 ]
 

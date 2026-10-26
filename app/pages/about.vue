@@ -3,7 +3,7 @@ import { PhScales, PhEye, PhTarget, PhHandshake, PhDesktopTower, PhUsersThree } 
 
 usePageSeo({
   title: 'About Us: A Forex Broker Built on nTrader',
-  description: 'Velora Markets is a forex broker that runs on one platform, nTrader. Learn why we chose one platform and our values: clear pricing and fair execution.',
+  description: 'Valora Markets is a forex broker that runs on one platform, nTrader. Learn why we chose one platform and our values: clear pricing and fair execution.',
   path: '/about',
   crumb: 'About us',
 })
@@ -18,7 +18,7 @@ const values = [
 
 <template>
   <div>
-    <PageHero title="A broker that does one thing well" lede="We started Velora Markets because traders were juggling three platforms and getting average service on each. So we chose one and built everything around it." />
+    <PageHero title="A broker that does one thing well" lede="We started Valora Markets because traders were juggling three platforms and getting average service on each. So we chose one and built everything around it." />
 
     <section class="section top0">
       <div class="wrap mosaic">
@@ -59,7 +59,7 @@ const values = [
     <section class="section">
       <blockquote v-reveal="'scale'" class="wrap quote">
         <p>&ldquo;We would rather run one platform properly than three platforms badly. That choice shapes everything we do.&rdquo;</p>
-        <footer>Velora Markets founding team</footer>
+        <footer>Valora Markets founding team</footer>
       </blockquote>
     </section>
 

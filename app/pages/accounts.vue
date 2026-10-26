@@ -37,13 +37,13 @@ const included = [
 
 const faqs = [
   { q: 'Can I change my account type later?', a: 'Yes. Open a second account of a different type from your client portal, or ask support to convert your account when you have no open positions.' },
-  { q: 'Is there an inactivity fee?', a: 'No. Velora Markets does not charge a fee for inactive accounts.' },
+  { q: 'Is there an inactivity fee?', a: 'No. Valora Markets does not charge a fee for inactive accounts.' },
   { q: 'Do you offer swap-free accounts?', a: 'Swap-free trading is available on Standard and Raw accounts for clients who need it. Contact support to apply.' },
 ]
 
 usePageSeo({
   title: 'Forex Account Types: Standard, Raw and Pro',
-  description: 'Compare Velora Markets forex accounts. Standard with no commission, Raw from 0.0 pips, Pro for high volume. Minimum deposit from $100 on nTrader.',
+  description: 'Compare Valora Markets forex accounts. Standard with no commission, Raw from 0.0 pips, Pro for high volume. Minimum deposit from $100 on nTrader.',
   path: '/accounts',
   crumb: 'Account types',
   faq: faqs,

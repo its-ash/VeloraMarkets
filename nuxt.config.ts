@@ -2,9 +2,9 @@ import { fileURLToPath } from 'node:url'
 import { ROUTES } from './app/data/site'
 
 const BASE_URL = process.env.NUXT_APP_BASE_URL ?? '/'
-const SITE_NAME = 'Velora Markets'
+const SITE_NAME = 'Valora Markets'
 const HERO_TEXT = 'Forex trading, built on nTrader alone.'
-const SITE_DESC = 'Velora Markets is a forex broker built on one platform: nTrader. Raw spreads, fast execution and segregated client funds.'
+const SITE_DESC = 'Valora Markets is a forex broker built on one platform: nTrader. Raw spreads, fast execution and segregated client funds.'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',

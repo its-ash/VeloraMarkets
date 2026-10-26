@@ -3,7 +3,7 @@ import { RISK_WARNING, COMPANY, CONTACT_EMAIL } from '~/data/site'
 
 usePageSeo({
   title: 'Legal: Risk Disclosure, Terms and Privacy',
-  description: 'Read the Velora Markets risk disclosure, terms of business, privacy policy and anti-money laundering policy before you trade forex on nTrader.',
+  description: 'Read the Valora Markets risk disclosure, terms of business, privacy policy and anti-money laundering policy before you trade forex on nTrader.',
   path: '/legal',
   crumb: 'Legal',
 })

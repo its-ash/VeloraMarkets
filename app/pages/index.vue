@@ -7,7 +7,7 @@ import { SIGNUP_URL, DEMO_URL, faqs, payments, pairs, pairGroups } from '~/data/
 
 usePageSeo({
   title: 'Forex Broker with Raw Spreads on nTrader',
-  description: 'Trade 20 forex pairs on nTrader with Velora Markets. Raw spreads from 0.0 pips, leverage up to 1:500, segregated funds and 24/5 human support.',
+  description: 'Trade 20 forex pairs on nTrader with Valora Markets. Raw spreads from 0.0 pips, leverage up to 1:500, segregated funds and 24/5 human support.',
   path: '/',
   faq: faqs,
 })
@@ -42,7 +42,7 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
       <div class="glow-bg" aria-hidden="true">
         <span class="orb o1" /><span class="orb o2" />
       </div>
-      <HeroScene />
+      <div class="scene-slot"><HeroScene /></div>
       <div class="veil" aria-hidden="true" />
       <div class="hud" aria-hidden="true" />
       <div class="wrap hero-in">
@@ -90,7 +90,7 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
     <section class="section">
       <div class="wrap">
         <div v-reveal class="head">
-          <h2>Why traders move to Velora</h2>
+          <h2>Why traders move to Valora</h2>
         </div>
         <div v-reveal="'stagger'" class="bento">
           <article v-spotlight class="panel spot glow cell a" style="--i: 0">
@@ -194,6 +194,9 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
 
 <style scoped>
 .hero { position: relative; min-block-size: 100dvh; display: grid; align-items: center; overflow: hidden; padding-block: calc(var(--nav-h) + 2rem) 4rem; isolation: isolate; }
+/* Desktop: the scene is full-bleed behind the copy. On mobile this becomes a real grid
+   row so the animation can own the top of the screen. */
+.scene-slot { position: absolute; inset: 0; }
 .glow-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(55% 45% at 50% 42%, rgb(255 178 26 / 0.14), transparent 70%), radial-gradient(70% 35% at 50% 100%, rgb(255 138 0 / 0.12), transparent 70%); }
 .orb { position: absolute; border-radius: 50%; animation: glow-pulse 11s var(--ease-in-out) infinite, drift 26s var(--ease-in-out) infinite alternate; }
 .o1 { inset: 10% auto auto -8%; inline-size: 30vmax; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(255 194 26 / 0.16), transparent); }
@@ -261,8 +264,17 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
-  .hero { padding-block-end: 3rem; }
-  .veil { background: linear-gradient(to top, var(--bg) 20%, oklch(0.12 0.004 85 / 0.7) 55%, oklch(0.12 0.004 85 / 0.15)); }
+  /* Mobile hero: animation on top, copy anchored to the bottom as one thumb-reach block.
+     Row 1 is 1fr, so the canvas simply takes whatever height the copy leaves over and the
+     hero always fills exactly one screen without manual height arithmetic. */
+  .hero { grid-template-rows: minmax(11rem, 1fr) auto; align-items: stretch; padding-block: 0 1.75rem; }
+  .scene-slot { position: relative; inset: auto; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+  .hero-in { gap: 1.15rem; }
+  .veil {
+    background:
+      linear-gradient(to top, var(--bg) 24%, oklch(0.12 0.004 85 / 0.9) 45%, oklch(0.12 0.004 85 / 0.35) 62%, transparent 78%),
+      radial-gradient(90% 45% at 50% 92%, oklch(0.12 0.004 85 / 0.6), transparent 72%);
+  }
   .ctas .btn { flex: 1; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .show, .faq-wrap { grid-template-columns: 1fr; }

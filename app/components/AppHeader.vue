@@ -35,7 +35,7 @@ const hover = (e: PointerEvent | FocusEvent) => {
   <div ref="sentinel" class="sentinel" aria-hidden="true" />
   <header class="bar" :data-solid="solid || undefined">
     <div class="wrap row">
-      <NuxtLink to="/" class="brand" aria-label="Velora Markets home">
+      <NuxtLink to="/" class="brand" aria-label="Valora Markets home">
         <LogoMark size="1.9rem" />
       </NuxtLink>
 
