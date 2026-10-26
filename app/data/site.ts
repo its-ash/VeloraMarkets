@@ -1,10 +1,10 @@
 export const SITE_URL = 'https://valoramarkets.io'
-export const PORTAL_URL = 'https://portal.veloramarkets.com'
+export const PORTAL_URL = 'https://portal.valoramarkets.io'
 export const SIGNUP_URL = `${PORTAL_URL}/register`
 export const DEMO_URL = `${PORTAL_URL}/register?type=demo`
 export const LOGIN_URL = `${PORTAL_URL}/login`
-export const WEB_TRADER_URL = 'https://ntrader.veloramarkets.com'
-export const CONTACT_EMAIL = 'support@veloramarkets.com'
+export const WEB_TRADER_URL = 'https://ntrader.valoramarkets.io'
+export const CONTACT_EMAIL = 'support@valoramarkets.io'
 export const COMPANY = 'Valora Markets'
 
 export const ROUTES = [

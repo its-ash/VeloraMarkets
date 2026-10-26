@@ -1,1 +1,0 @@
-import{C as e}from"./DEFa66T3.js";var t=t=>`${e().app.baseURL.replace(/\/$/,``)}/${t.replace(/^\//,``)}`;export{t};
