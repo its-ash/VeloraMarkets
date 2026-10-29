@@ -1,9 +1,10 @@
 export const SITE_URL = 'https://valoramarkets.io'
-export const PORTAL_URL = 'https://portal.valoramarkets.io'
-export const SIGNUP_URL = `${PORTAL_URL}/register`
-export const DEMO_URL = `${PORTAL_URL}/register?type=demo`
-export const LOGIN_URL = `${PORTAL_URL}/login`
-export const WEB_TRADER_URL = 'https://ntrader.valoramarkets.io'
+export const CRM_URL = 'http://crm.valoramarkets.io/'
+export const PORTAL_URL = CRM_URL
+export const SIGNUP_URL = `${CRM_URL}#/client/signup`
+export const DEMO_URL = CRM_URL
+export const LOGIN_URL = CRM_URL
+export const WEB_TRADER_URL = CRM_URL
 export const CONTACT_EMAIL = 'support@valoramarkets.io'
 export const COMPANY = 'Valora Markets'
 
