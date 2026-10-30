@@ -194,13 +194,11 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
 
 <style scoped>
 .hero { position: relative; min-block-size: 100dvh; display: grid; align-items: center; overflow: hidden; padding-block: calc(var(--nav-h) + 2rem) 4rem; isolation: isolate; }
-/* Desktop: the scene is full-bleed behind the copy. On mobile this becomes a real grid
-   row so the animation can own the top of the screen. */
 .scene-slot { position: absolute; inset: 0; }
-.glow-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(55% 45% at 50% 42%, rgb(255 178 26 / 0.14), transparent 70%), radial-gradient(70% 35% at 50% 100%, rgb(255 138 0 / 0.12), transparent 70%); }
+.glow-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(55% 45% at 50% 42%, rgb(255 248 63 / 0.12), transparent 70%), radial-gradient(70% 35% at 50% 100%, rgb(232 220 26 / 0.1), transparent 70%); }
 .orb { position: absolute; border-radius: 50%; animation: glow-pulse 11s var(--ease-in-out) infinite, drift 26s var(--ease-in-out) infinite alternate; }
-.o1 { inset: 10% auto auto -8%; inline-size: 30vmax; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(255 194 26 / 0.16), transparent); }
-.o2 { inset: 10% -8% auto auto; inline-size: 30vmax; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(255 138 0 / 0.14), transparent); animation-delay: -4s, -10s; }
+.o1 { inset: 10% auto auto -8%; inline-size: 30vmax; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(255 248 63 / 0.14), transparent); }
+.o2 { inset: 10% -8% auto auto; inline-size: 30vmax; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(232 220 26 / 0.12), transparent); animation-delay: -4s, -10s; }
 .hud { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, oklch(1 0 0 / 0.025) 0 1px, transparent 1px 4px), radial-gradient(120% 100% at 50% 50%, transparent 55%, oklch(0.08 0.004 85 / 0.7)); }
 .veil { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(38% 30% at 50% 50%, oklch(0.12 0.004 85 / 0.6), oklch(0.12 0.004 85 / 0.15) 70%, transparent), linear-gradient(to top, var(--bg) 2%, transparent 26%); }
 .hero-in { position: relative; display: grid; justify-items: center; text-align: center; gap: 1.5rem; max-inline-size: var(--wrap); margin-inline: auto; }
@@ -270,16 +268,13 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
-  /* Mobile hero: animation on top, copy anchored to the bottom as one thumb-reach block.
-     Row 1 is 1fr, so the canvas simply takes whatever height the copy leaves over and the
-     hero always fills exactly one screen without manual height arithmetic. */
-  .hero { grid-template-rows: minmax(11rem, 1fr) auto; align-items: stretch; padding-block: 0 1.75rem; }
-  .scene-slot { position: relative; inset: auto; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+  /* Mobile hero: scene stays full-bleed and the copy sits in the centre, as on desktop. */
+  .hero { align-items: center; padding-block: calc(var(--nav-h) + 1rem) 2.5rem; }
   .hero-in { gap: 1.15rem; }
   .veil {
     background:
-      linear-gradient(to top, var(--bg) 24%, oklch(0.12 0.004 85 / 0.9) 45%, oklch(0.12 0.004 85 / 0.35) 62%, transparent 78%),
-      radial-gradient(90% 45% at 50% 92%, oklch(0.12 0.004 85 / 0.6), transparent 72%);
+      radial-gradient(85% 42% at 50% 50%, oklch(0.12 0.004 85 / 0.82), oklch(0.12 0.004 85 / 0.35) 70%, transparent),
+      linear-gradient(to top, var(--bg) 4%, transparent 28%);
   }
   .ctas .btn { flex: 1; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }

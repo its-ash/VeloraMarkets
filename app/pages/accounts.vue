@@ -172,13 +172,13 @@ dd { text-align: end; }
   .col-h { grid-template-columns: auto 1fr; column-gap: 0.75rem; row-gap: 0.35rem; align-items: center; }
   .col-top { display: contents; }
   .col-top .icon-chip { grid-row: span 2; }
-  .tag { grid-column: 2; grid-row: 2; justify-self: start; padding: 0.15rem 0.5rem; font-size: 0.72rem; }
+  .tag { grid-column: 2; grid-row: 2; justify-self: start; padding: 0.15rem 0.5rem; font-size: 0.78rem; }
   .col-name { grid-column: 2; grid-row: 1; font-size: 1.35rem; }
   .col-h .muted { grid-column: 1 / -1; font-size: 0.85rem; }
   .col-spec { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; }
   .kv { flex-direction: column; gap: 0.1rem; padding: 0.5rem 0.6rem; border-radius: var(--r-sm); background: oklch(1 0 0 / 0.03); }
   .kv + .kv { border: 0; }
-  dt { font-size: 0.7rem; }
+  dt { font-size: 0.78rem; }
   dd { text-align: start; font-size: 0.82rem; }
   .col .btn { min-block-size: 2.6rem; font-size: 0.9rem; }
 

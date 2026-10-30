@@ -4,10 +4,10 @@ import * as THREE from 'three'
 const host = ref<HTMLDivElement>()
 const ready = ref(false)
 
-const GOLD = new THREE.Color('#ffd51e')
-const AMBER = new THREE.Color('#f5c400')
-const HOT = new THREE.Color('#fff3b0')
-const DIM = new THREE.Color('#5c4a08')
+const GOLD = new THREE.Color('#fff83f')
+const AMBER = new THREE.Color('#e8dc1a')
+const HOT = new THREE.Color('#fffdc4')
+const DIM = new THREE.Color('#5a5608')
 const BG = 0x0b0a08
 const GLYPHS = ['$', '€', '£', '¥', '₣', '₹', 'A$', 'C$']
 
@@ -200,7 +200,7 @@ const glyphTexture = (g: string) => {
   const c = document.createElement('canvas')
   c.width = c.height = 128
   const x = c.getContext('2d')!
-  x.fillStyle = '#ffd51e'
+  x.fillStyle = '#fff83f'
   x.font = `600 ${g.length > 1 ? 56 : 80}px "Space Grotesk Variable", system-ui, sans-serif`
   x.textAlign = 'center'
   x.textBaseline = 'middle'
@@ -217,6 +217,8 @@ onMounted(() => {
   if (!el) return
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
   const small = matchMedia('(max-width: 768px)').matches
+  const touch = !matchMedia('(hover: hover) and (pointer: fine)').matches
+  const CAM = small ? new THREE.Vector3(0, 3.4, 15) : new THREE.Vector3(0, 5, 22)
 
   let renderer: THREE.WebGLRenderer
   try {
@@ -231,7 +233,7 @@ onMounted(() => {
   const scene = new THREE.Scene()
   scene.fog = new THREE.Fog(BG, 34, 85)
   const camera = new THREE.PerspectiveCamera(52, 1, 0.1, 200)
-  camera.position.set(0, 5, 22)
+  camera.position.copy(CAM)
 
   const add = { transparent: true, depthWrite: false, blending: THREE.AdditiveBlending } as const
   const time = { value: 0 }
@@ -240,9 +242,9 @@ onMounted(() => {
   const flat = (c: THREE.Color, a: number) => track(new THREE.ShaderMaterial({ vertexShader: flatVert, fragmentShader: flatFrag, uniforms: { uColor: { value: c }, uAlpha: { value: a } }, ...add }))
 
   // Neon wireframe floor with a scanning beam and a ripple under the globe
-  const cols = small ? 46 : 110
-  const rows = small ? 32 : 80
-  const gap = small ? 1.3 : 0.85
+  const cols = small ? 34 : 110
+  const rows = small ? 30 : 80
+  const gap = small ? 1.2 : 0.85
   const tPos = new Float32Array(cols * rows * 3)
   for (let j = 0; j < rows; j++)
     for (let i = 0; i < cols; i++) {
@@ -273,12 +275,12 @@ onMounted(() => {
 
   // Centred holographic globe
   const core = new THREE.Group()
-  core.position.set(0, small ? 4.5 : 3.2, -14)
+  core.position.set(0, small ? 2.6 : 3.2, small ? -10 : -14)
   scene.add(core)
   const globe = new THREE.Group()
   globe.rotation.z = 0.3
   core.add(globe)
-  const R = small ? 4.4 : 5.2
+  const R = small ? 4 : 5.2
   const gCount = small ? 700 : 2000
   const gPos = new Float32Array(gCount * 3)
   const gSeed = new Float32Array(gCount)
@@ -372,7 +374,7 @@ onMounted(() => {
   const pGeo = track(new THREE.BufferGeometry())
   pGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(seg * 3), 3))
   pGeo.setAttribute('aX', new THREE.BufferAttribute(xs, 1))
-  ;[[0, -1.2, -22, GOLD], [1, 1.6, -30, AMBER], [2, -3.2, -36, GOLD]].forEach(([s, y, z, c]) => {
+  ;(small ? [[0, -1.6, -20, GOLD]] : [[0, -1.2, -22, GOLD], [1, 1.6, -30, AMBER], [2, -3.2, -36, GOLD]]).forEach(([s, y, z, c]) => {
     const line = new THREE.Line(pGeo, track(new THREE.ShaderMaterial({
       vertexShader: priceVert,
       fragmentShader: priceFrag,
@@ -391,8 +393,8 @@ onMounted(() => {
   const sS: number[] = []
   for (let i = 0; i < streams; i++) {
     const side = Math.random() > 0.5 ? 1 : -1
-    const x = side * (8 + Math.random() * 32)
-    const z = -6 - Math.random() * 46
+    const x = side * (small ? 5 + Math.random() * 8 : 8 + Math.random() * 32)
+    const z = -6 - Math.random() * (small ? 14 : 46)
     const len = 5 + Math.random() * 12
     const seed = Math.random()
     sPos.push(x, -4, z, x, -4 + len, z)
@@ -418,7 +420,7 @@ onMounted(() => {
     const mat = track(new THREE.SpriteMaterial({ map: textures[i % textures.length], color: 0xffffff, ...add, opacity: 0 }))
     const sp = new THREE.Sprite(mat)
     const side = i % 2 ? 1 : -1
-    const data = { x: side * (7 + Math.random() * 22), y: -4 + Math.random() * 18, z: -8 - Math.random() * 30, v: 0.5 + Math.random() * 0.8, s: 0.9 + Math.random() * 1.4 }
+    const data = { x: side * (small ? 4.5 + Math.random() * 6 : 7 + Math.random() * 22), y: -4 + Math.random() * 18, z: -8 - Math.random() * (small ? 10 : 30), v: 0.5 + Math.random() * 0.8, s: 0.9 + Math.random() * 1.4 }
     sp.scale.setScalar(data.s)
     scene.add(sp)
     return { sp, mat, data }
@@ -432,7 +434,7 @@ onMounted(() => {
   }
 
   const target = new THREE.Vector2()
-  const look = new THREE.Vector3(0, 2.4, -12)
+  const look = small ? new THREE.Vector3(0, 2.2, -10) : new THREE.Vector3(0, 2.4, -12)
   const onPointer = (e: PointerEvent) => {
     target.set((e.clientX / innerWidth) * 2 - 1, -((e.clientY / innerHeight) * 2 - 1))
   }
@@ -460,6 +462,7 @@ onMounted(() => {
     if (!calm) t += dt
     time.value = t
     const ease = 1 - Math.exp(-dt * 2.5)
+    if (touch) target.set(Math.sin(t * 0.35) * 0.6, Math.cos(t * 0.27) * 0.3)
     ptr.lerp(target, ease)
 
     // Push-in on first paint, so the scene arrives with the headline instead of popping
@@ -468,8 +471,8 @@ onMounted(() => {
 
     const scroll = Math.min(Math.max((window.scrollY - heroTop) / heroH, 0), 1)
     camera.position.x += (target.x * 2 - camera.position.x) * ease
-    camera.position.y += (5 + target.y * 1 - scroll * 3 - camera.position.y) * ease
-    camera.position.z = 22 + 9 * (1 - enter)
+    camera.position.y += (CAM.y + target.y - scroll * 3 - camera.position.y) * ease
+    camera.position.z = CAM.z + 9 * (1 - enter)
     camera.lookAt(look)
     globe.rotation.y = t * 0.09
     core.rotation.y = target.x * 0.12

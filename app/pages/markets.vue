@@ -126,14 +126,14 @@ onMounted(place)
 .frame { border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
 
 .clock { --lab: 9rem; display: grid; gap: 1rem; padding: 2rem 1.5rem 1.75rem; }
-.hours { position: relative; block-size: 1.2rem; margin-inline-start: var(--lab); font-size: 0.72rem; color: var(--faint); }
+.hours { position: relative; block-size: 1.2rem; margin-inline-start: var(--lab); font-size: 0.78rem; color: var(--faint); }
 .hours span { position: absolute; translate: -50% 0; }
 .hours span:first-child { translate: 0 0; }
 .hours span:last-child { translate: -100% 0; }
 .sess { display: grid; gap: 1rem; }
 .s-row { display: grid; grid-template-columns: var(--lab) 1fr; align-items: center; }
 .s-name { display: flex; align-items: center; gap: 0.6rem; font-weight: 550; }
-.s-state { font-size: 0.72rem; color: var(--faint); font-weight: 500; }
+.s-state { font-size: 0.78rem; color: var(--faint); font-weight: 500; }
 .s-state[data-open] { color: var(--gold); }
 .s-track { position: relative; block-size: 2.25rem; border-radius: var(--r-sm); background: oklch(1 0 0 / 0.03); overflow: hidden; }
 .s-seg { position: absolute; inset-block: 0; border-radius: var(--r-sm); background: var(--surface-2); transform-origin: 0 50%; animation: seg 1100ms var(--ease-out) both; animation-delay: calc(var(--i) * 120ms + 200ms); }

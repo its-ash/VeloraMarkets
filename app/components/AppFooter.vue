@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PhAppleLogo, PhGooglePlayLogo } from '@phosphor-icons/vue'
-import { nav, RISK_WARNING, COMPANY, CONTACT_EMAIL, WEB_TRADER_URL, IOS_URL, ANDROID_URL } from '~/data/site'
+import { nav, RISK_WARNING, COMPANY, CONTACT_EMAIL, WEB_TRADER_URL, LOGIN_URL, IOS_URL, ANDROID_URL } from '~/data/site'
 
 const year = new Date().getFullYear()
 const legal = [
@@ -22,8 +22,10 @@ const legal = [
       <nav aria-label="Company" class="col">
         <h2 class="ttl">Company</h2>
         <ul>
+          <li><NuxtLink to="/">Home</NuxtLink></li>
           <li v-for="l in nav" :key="l.to"><NuxtLink :to="l.to">{{ l.label }}</NuxtLink></li>
           <li><a :href="WEB_TRADER_URL">nTrader Web</a></li>
+          <li><a :href="LOGIN_URL">Log in</a></li>
         </ul>
       </nav>
       <nav aria-label="Legal" class="col">
@@ -63,6 +65,9 @@ const legal = [
 @media (max-width: 768px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .brand { grid-column: 1 / -1; }
+  .col ul { gap: 0; }
+  .col a { min-block-size: 2.75rem; }
+  .mail { display: inline-flex; align-items: center; min-block-size: 2.75rem; }
   .apps { display: grid; gap: 0.75rem; padding-block-start: 1rem; border-block-start: 1px solid var(--line); }
   .apps .ttl { margin: 0; color: var(--text); }
   .apps-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
