@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
   PhArrowRight, PhDesktop, PhGlobe, PhDeviceMobile, PhLightning, PhChartBar, PhRobot,
-  PhBell, PhStack, PhUsersThree, PhCheck,
+  PhBell, PhStack, PhUsersThree, PhCheck, PhAppleLogo, PhGooglePlayLogo,
 } from '@phosphor-icons/vue'
-import { DEMO_URL, WEB_TRADER_URL, PORTAL_URL, pairGroups } from '~/data/site'
+import { DEMO_URL, WEB_TRADER_URL, PORTAL_URL, IOS_URL, ANDROID_URL, pairGroups } from '~/data/site'
 
 usePageSeo({
   title: 'nTrader Platform for Desktop, Web and Mobile',
@@ -13,9 +13,9 @@ usePageSeo({
 })
 
 const devices = [
-  { icon: PhDesktop, name: 'nTrader Desktop', body: 'Detachable charts across several monitors, hotkeys for every order type and full depth of market.', pts: ['Windows and macOS', 'Multi-monitor layouts', 'Custom hotkeys'], cta: 'Download desktop', href: `${PORTAL_URL}/downloads` },
-  { icon: PhGlobe, name: 'nTrader Web', body: 'The full platform in your browser. No install, no plugins, and your layouts follow you between devices.', pts: ['Runs in any modern browser', 'Synced workspaces', 'Same order tools as desktop'], cta: 'Launch web app', href: WEB_TRADER_URL },
-  { icon: PhDeviceMobile, name: 'nTrader Mobile', body: 'Open, edit and close positions with one thumb. Price alerts arrive as push notifications.', pts: ['iOS and Android', 'Biometric log in', 'Charts with drawing tools'], cta: 'Get the app', href: `${PORTAL_URL}/downloads#mobile` },
+  { icon: PhDesktop, name: 'nTrader Desktop', body: 'Detachable charts across several monitors, hotkeys for every order type and full depth of market.', pts: ['Windows and macOS', 'Multi-monitor layouts', 'Custom hotkeys'], links: [{ label: 'Download desktop', href: `${PORTAL_URL}/downloads`, icon: PhArrowRight }] },
+  { icon: PhGlobe, name: 'nTrader Web', body: 'The full platform in your browser. No install, no plugins, and your layouts follow you between devices.', pts: ['Runs in any modern browser', 'Synced workspaces', 'Same order tools as desktop'], links: [{ label: 'Launch web app', href: WEB_TRADER_URL, icon: PhArrowRight }] },
+  { icon: PhDeviceMobile, name: 'nTrader Mobile', body: 'Open, edit and close positions with one thumb. Price alerts arrive as push notifications.', pts: ['iOS and Android', 'Biometric log in', 'Charts with drawing tools'], links: [{ label: 'App Store', href: IOS_URL, icon: PhAppleLogo }, { label: 'Google Play', href: ANDROID_URL, icon: PhGooglePlayLogo }] },
 ]
 
 const features = [
@@ -63,7 +63,9 @@ const features = [
             <ul class="pts">
               <li v-for="p in d.pts" :key="p"><PhCheck :size="16" weight="bold" class="gold" />{{ p }}</li>
             </ul>
-            <a :href="d.href" class="btn">{{ d.cta }} <PhArrowRight :size="18" /></a>
+            <div class="dev-links">
+              <a v-for="l in d.links" :key="l.href" :href="l.href" class="btn" target="_blank" rel="noopener">{{ l.label }} <component :is="l.icon" :size="18" /></a>
+            </div>
           </article>
         </div>
       </div>
@@ -100,7 +102,7 @@ const features = [
 
 .devs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .dev { padding: clamp(1.5rem, 1rem + 1.5vi, 2.25rem); display: grid; gap: 1rem; align-content: start; }
-.dev .btn { justify-self: start; margin-block-start: 0.5rem; }
+.dev-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-block-start: 0.5rem; }
 .dev-icon { position: relative; display: grid; place-items: center; block-size: 8rem; margin-block-end: 0.5rem; }
 .halo { position: absolute; inline-size: 8rem; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, oklch(0.83 0.165 84 / 0.28), transparent); animation: glow-pulse 5s var(--ease-in-out) infinite; animation-delay: calc(var(--i) * -1.2s); }
 .pts { display: grid; gap: 0.5rem; }

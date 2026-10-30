@@ -5,6 +5,8 @@ export const SIGNUP_URL = `${CRM_URL}#/client/signup`
 export const DEMO_URL = CRM_URL
 export const LOGIN_URL = CRM_URL
 export const WEB_TRADER_URL = CRM_URL
+export const IOS_URL = 'https://apps.apple.com/ae/app/n-trader/id6478588723'
+export const ANDROID_URL = 'https://play.google.com/store/apps/details?id=ntrader.nextgen&hl=en_IN'
 export const CONTACT_EMAIL = 'support@valoramarkets.io'
 export const COMPANY = 'Valora Markets'
 

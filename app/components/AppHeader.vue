@@ -94,6 +94,8 @@ const hover = (e: PointerEvent | FocusEvent) => {
   border-block-end: 1px solid transparent;
   transition: background-color 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
 }
+@media (prefers-reduced-motion: no-preference) { .bar { animation: bar-in 800ms var(--ease-out) both; } }
+@keyframes bar-in { from { opacity: 0; translate: 0 -100%; } }
 .bar[data-solid] { background: oklch(0.12 0.004 85 / 0.72); backdrop-filter: blur(16px) saturate(1.3); border-color: var(--line); }
 @media (prefers-reduced-transparency: reduce) { .bar[data-solid] { background: var(--bg); backdrop-filter: none; } }
 

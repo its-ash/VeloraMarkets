@@ -76,7 +76,7 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
         <div v-reveal="'left'" class="stack">
           <h2>One platform, tuned for every trade</h2>
           <p class="lede">We build pricing, risk and support around nTrader only. You get one fast stack instead of three average ones.</p>
-          <ul class="ticks">
+          <ul v-reveal="'stagger'" class="ticks">
             <li v-for="t in tools" :key="t"><PhCheck :size="18" weight="bold" class="gold" />{{ t }}</li>
           </ul>
           <NuxtLink to="/platform" class="btn more">Explore nTrader <PhArrowRight :size="18" /></NuxtLink>
@@ -208,6 +208,12 @@ const payName: Record<string, string> = { visa: 'Visa', mastercard: 'Mastercard'
 .hero-in > .lede { margin-inline: auto; }
 .hero-in > .ht-wrap { max-inline-size: 100%; }
 .hero-in .ctas { justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero-in { animation: hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; }
+  }
+}
+@keyframes hero-out { to { opacity: 0; translate: 0 -3rem; scale: 0.96; } }
 .ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block-start: 0.5rem; }
 
 .tape { background: transparent; }

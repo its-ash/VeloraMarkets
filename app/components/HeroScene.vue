@@ -4,10 +4,10 @@ import * as THREE from 'three'
 const host = ref<HTMLDivElement>()
 const ready = ref(false)
 
-const GOLD = new THREE.Color('#ffc21a')
-const AMBER = new THREE.Color('#ff8a00')
-const HOT = new THREE.Color('#fff0b3')
-const DIM = new THREE.Color('#6b4a0c')
+const GOLD = new THREE.Color('#ffd51e')
+const AMBER = new THREE.Color('#f5c400')
+const HOT = new THREE.Color('#fff3b0')
+const DIM = new THREE.Color('#5c4a08')
 const BG = 0x0b0a08
 const GLYPHS = ['$', '€', '£', '¥', '₣', '₹', 'A$', 'C$']
 
@@ -200,7 +200,7 @@ const glyphTexture = (g: string) => {
   const c = document.createElement('canvas')
   c.width = c.height = 128
   const x = c.getContext('2d')!
-  x.fillStyle = '#ffc21a'
+  x.fillStyle = '#ffd51e'
   x.font = `600 ${g.length > 1 ? 56 : 80}px "Space Grotesk Variable", system-ui, sans-serif`
   x.textAlign = 'center'
   x.textBaseline = 'middle'
