@@ -8,6 +8,8 @@ export const WEB_TRADER_URL = CRM_URL
 export const IOS_URL = 'https://apps.apple.com/ae/app/n-trader/id6478588723'
 export const ANDROID_URL = 'https://play.google.com/store/apps/details?id=ntrader.nextgen&hl=en_IN'
 export const CONTACT_EMAIL = 'support@valoramarkets.io'
+export const CONTACT_PHONE = '+44 7457 412215'
+export const PHONE_HREF = `tel:${CONTACT_PHONE.replace(/\s/g, '')}`
 export const COMPANY = 'Valora Markets'
 
 export const ROUTES = [

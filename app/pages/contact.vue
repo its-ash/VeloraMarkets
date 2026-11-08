@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PhEnvelope, PhChatCircle, PhClock, PhCheckCircle, PhPaperPlaneTilt } from '@phosphor-icons/vue'
-import { CONTACT_EMAIL } from '~/data/site'
+import { PhEnvelope, PhPhone, PhChatCircle, PhClock, PhCheckCircle, PhPaperPlaneTilt } from '@phosphor-icons/vue'
+import { CONTACT_EMAIL, CONTACT_PHONE, PHONE_HREF } from '~/data/site'
 
 usePageSeo({
   title: 'Contact Our Forex Support Team',
@@ -42,6 +42,7 @@ const reset = () => {
 const ways = [
   { icon: PhChatCircle, t: 'Live chat', d: 'Inside nTrader and the client portal.' },
   { icon: PhEnvelope, t: 'Email', d: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { icon: PhPhone, t: 'Phone', d: CONTACT_PHONE, href: PHONE_HREF },
   { icon: PhClock, t: 'Hours', d: '24 hours a day, Monday to Friday.' },
 ]
 </script>
@@ -68,7 +69,7 @@ const ways = [
             <div v-if="state === 'sent'" key="ok" class="done" role="status">
               <PhCheckCircle :size="48" weight="duotone" class="gold" />
               <h2>Your email app should now be open</h2>
-              <p class="muted">Press send there to deliver your message. If nothing opened, write to <a :href="`mailto:${CONTACT_EMAIL}`" class="gold">{{ CONTACT_EMAIL }}</a>.</p>
+              <p class="muted">Press send there to deliver your message. If nothing opened, write to <a :href="`mailto:${CONTACT_EMAIL}`" class="gold">{{ CONTACT_EMAIL }}</a> or call <a :href="PHONE_HREF" class="gold">{{ CONTACT_PHONE }}</a>.</p>
               <button type="button" class="btn" @click="reset">Write another message</button>
             </div>
 

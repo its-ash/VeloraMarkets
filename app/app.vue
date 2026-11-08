@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { COMPANY, CONTACT_EMAIL } from '~/data/site'
+import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE } from '~/data/site'
 
 const home = absUrl('/')
 const logo = absUrl('/logo.png')
@@ -20,9 +20,10 @@ useHead({
           logo: { '@type': 'ImageObject', url: logo, width: 1774, height: 887 },
           image: logo,
           email: CONTACT_EMAIL,
+          telephone: CONTACT_PHONE,
           description: 'Forex broker that offers trading on one platform, nTrader, with raw spreads, fast execution and segregated client funds.',
           areaServed: 'Worldwide',
-          contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: CONTACT_EMAIL, availableLanguage: ['English'], hoursAvailable: 'Mo-Fr 00:00-23:59' },
+          contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: CONTACT_EMAIL, telephone: CONTACT_PHONE, availableLanguage: ['English'], hoursAvailable: 'Mo-Fr 00:00-23:59' },
         },
         {
           '@type': 'WebSite',

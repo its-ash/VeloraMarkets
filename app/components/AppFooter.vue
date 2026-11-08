@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PhAppleLogo, PhGooglePlayLogo } from '@phosphor-icons/vue'
-import { nav, RISK_WARNING, COMPANY, CONTACT_EMAIL, WEB_TRADER_URL, LOGIN_URL, IOS_URL, ANDROID_URL } from '~/data/site'
+import { nav, RISK_WARNING, COMPANY, CONTACT_EMAIL, CONTACT_PHONE, PHONE_HREF, WEB_TRADER_URL, LOGIN_URL, IOS_URL, ANDROID_URL } from '~/data/site'
 
 const year = new Date().getFullYear()
 const legal = [
@@ -17,7 +17,10 @@ const legal = [
       <div class="brand stack">
         <LogoMark size="2.2rem" />
         <p class="muted">A forex broker with one platform. Every account, every tool and every price runs on nTrader.</p>
-        <a :href="`mailto:${CONTACT_EMAIL}`" class="mail">{{ CONTACT_EMAIL }}</a>
+        <div class="reach">
+          <a :href="`mailto:${CONTACT_EMAIL}`" class="mail">{{ CONTACT_EMAIL }}</a>
+          <a :href="PHONE_HREF" class="mail">{{ CONTACT_PHONE }}</a>
+        </div>
       </div>
       <nav aria-label="Company" class="col">
         <h2 class="ttl">Company</h2>
@@ -53,6 +56,7 @@ const legal = [
 .foot { border-block-start: 1px solid var(--line); background: var(--bg-2); padding-block: clamp(3rem, 2rem + 3vi, 5rem) 2rem; margin-block-start: auto; }
 .grid { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
 .brand p { max-inline-size: 38ch; }
+.reach { display: grid; gap: 0.35rem; justify-items: start; }
 .mail { color: var(--gold); font-weight: 550; inline-size: fit-content; }
 .ttl { font-size: 0.95rem; letter-spacing: 0; margin-block-end: 1rem; }
 .col ul { display: grid; gap: 0.35rem; }
